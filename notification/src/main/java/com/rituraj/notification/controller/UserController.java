@@ -2,6 +2,7 @@ package com.rituraj.notification.controller;
 
 import com.rituraj.notification.entity.User;
 import com.rituraj.notification.repository.UserRepository;
+import com.rituraj.notification.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +13,25 @@ import java.util.Optional;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllUsers(){
-        return ResponseEntity.ok().body(Optional.of(userRepository.findAll()));
+        return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user){
-        userRepository.save(user);
-        return ResponseEntity.ok().build();
+        if( userService.saveUser(user) ){
+            return ResponseEntity.ok().body("User created successfully!");
+        }
+        else{
+            return ResponseEntity.internalServerError().body("Something went wrong!");
+        }
     }
 }
