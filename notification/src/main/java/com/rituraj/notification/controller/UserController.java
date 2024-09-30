@@ -6,6 +6,8 @@ import com.rituraj.notification.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -21,10 +23,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllUsers(){
-        return ResponseEntity.ok().body(userService.getAllUsers());
+    @GetMapping("/verify")
+    public ResponseEntity<?> verifyUserMail(){
+        Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
+        String emailAddress = authenticatedUser.getName();
+        return ResponseEntity.ok(emailAddress);
     }
-//    @PostMapping("/verify")
-//    public ResponseEntity<?> verifyUserMail(@Valid @RequestBody User user){}
 }
