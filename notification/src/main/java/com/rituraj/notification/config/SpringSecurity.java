@@ -27,10 +27,10 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((auth) -> auth
+        http.csrf().disable().authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/protected/**").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/public/**").permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());
         return http.build();

@@ -2,6 +2,7 @@ package com.rituraj.notification.controller;
 
 import com.rituraj.notification.entity.User;
 import com.rituraj.notification.repository.UserRepository;
+import com.rituraj.notification.service.EmailService;
 import com.rituraj.notification.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,14 @@ import java.util.Optional;
 @RequestMapping("/protected/user")
 public class UserController {
 
-    private final UserService userService;
-
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private EmailService emailService;
 
     @GetMapping("/verify")
     public ResponseEntity<?> verifyUserMail(){
         Authentication authenticatedUser = SecurityContextHolder.getContext().getAuthentication();
         String emailAddress = authenticatedUser.getName();
-        return ResponseEntity.ok(emailAddress);
+        emailService.sendVerificationMail(emailAddress);
+        return ResponseEntity.ok("Mail sent!");
     }
 }
