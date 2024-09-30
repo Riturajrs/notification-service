@@ -27,9 +27,12 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/protected/**").
-                authorizeHttpRequests((auth) -> auth.anyRequest().authenticated()).
-                httpBasic(Customizer.withDefaults());
+        http.authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/protected/**").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
 
