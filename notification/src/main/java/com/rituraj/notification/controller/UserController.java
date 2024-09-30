@@ -3,6 +3,7 @@ package com.rituraj.notification.controller;
 import com.rituraj.notification.entity.User;
 import com.rituraj.notification.repository.UserRepository;
 import com.rituraj.notification.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody User user){
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user){
         if( userService.saveUser(user) ){
             return ResponseEntity.ok().body("User created successfully!");
         }
@@ -34,4 +35,7 @@ public class UserController {
             return ResponseEntity.internalServerError().body("Something went wrong!");
         }
     }
+
+    @PostMapping("/verify")
+    public ResponseEntity<?> verifyUserMail(@Valid @RequestBody User user){}
 }

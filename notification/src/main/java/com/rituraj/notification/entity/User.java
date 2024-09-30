@@ -1,6 +1,7 @@
 package com.rituraj.notification.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 @Data
@@ -16,8 +17,13 @@ public class User {
 
     @NonNull
     @Column(unique = true)
-    private String userName;
+    @Email
+    private String email;
 
     @NonNull
     private String password;
+
+    private Long phoneNumber;
+
+    private boolean isMailVerified = false;
 }
