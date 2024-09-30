@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -23,7 +25,11 @@ public class User {
     @NonNull
     private String password;
 
+    @NonNull
+    private String roles;
+
     private Long phoneNumber;
 
     private boolean isMailVerified = false;
+
 }
