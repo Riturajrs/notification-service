@@ -15,7 +15,8 @@ public class VerificationCodeService {
     private final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateVerificationCode(String email) {
-        long expirationDate = 60 * 60 * 1000;
+//        Expiration for 5 minutes in milliseconds
+        long expirationDate = 5 * 60 * 1000;
         return Jwts
                 .builder()
                 .setSubject(email)

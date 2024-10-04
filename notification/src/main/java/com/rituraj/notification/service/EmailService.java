@@ -26,7 +26,7 @@ public class EmailService {
             mailMessage.setTo(email);
             mailMessage.setSubject("Verification Email");
             String jwtToken = verificationCodeService.generateVerificationCode(email);
-            mailMessage.setText("Verification code : "+ baseUrl+"/protected/user/verify-code/"+jwtToken);
+            mailMessage.setText("This is code is valid for 5 minutes. Verification code : "+ baseUrl+"/protected/user/verify-code/"+jwtToken);
             mailSender.send(mailMessage);
         }
         catch(Exception e){
