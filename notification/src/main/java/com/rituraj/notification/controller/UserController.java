@@ -33,4 +33,11 @@ public class UserController {
         emailService.sendVerificationMail(emailAddress, baseUrl);
         return ResponseEntity.ok("Mail sent!");
     }
+
+    @GetMapping("/verify-code")
+    public ResponseEntity<?> verifyUserCode(@RequestParam(name = "hash",
+            defaultValue = "defaultHash") String JwtHash) {
+        emailService.verifyEmailAddress(JwtHash);
+        return ResponseEntity.ok("Code verified!");
+    }
 }

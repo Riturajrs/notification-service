@@ -30,6 +30,7 @@ public class User {
 
     private Long phoneNumber;
 
+    @NonNull
     private boolean isMailVerified = false;
 
 }
